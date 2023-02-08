@@ -97,6 +97,8 @@
         "utility": "cpp",
         "valarray": "cpp",
         "variant": "cpp",
-        "vector": "cpp"
-    }
+        "vector": "cpp",
+        
+    },
+    "code-runner.runInTerminal": true
 }
