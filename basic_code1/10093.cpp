@@ -15,19 +15,17 @@ int main(void){
     long long right, left;
     
     if (b >= a) right = b, left = a;
-    else right = a;
+    else right = a, left = b;
 
-    r1 = abs(b - a - 1);
+    r1 = abs(b - a);
     if (r1 > 1){
-        cout << r1 << "\n";
-        
-        for(long long num = left; num < right; num++){
+        cout << r1 - 1 << "\n";
+        for(long long num = left + 1; num < right; num++){
             cout << num << " ";
         }
     } 
     else {
         cout << 0 << "\n";
-        cout << 0;
     }
     
 
