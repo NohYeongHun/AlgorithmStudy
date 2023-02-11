@@ -5,7 +5,7 @@ using namespace std;
 
 const int MX = 10000;
 int dat[MX], pre[MX], nxt[MX];
-int unused = 1;
+int unused = 6;
 
 
 void traverse(){
@@ -18,23 +18,18 @@ void traverse(){
 }
 
 void insert(int addr, int num){
-    int idx = -1;
-    for(int i = 1; i < MX; i++){
-        if (dat[i] == -1){
-            idx = i; 
-            break;
-        } 
-    }
-    cout << "idx : " << idx << "\n";
-    dat[idx] = num;
     int next = nxt[addr];
-    int cur = addr;
+
+    dat[unused] = num;
+    pre[unused] = addr;
+    nxt[unused] = next;
+
+    if(next != -1) pre[next] = unused;
 
     // 연결 변경.
-    pre[next] = idx;
-    nxt[idx] = next;
-    pre[idx] = cur;
-    nxt[cur] = idx;
+    nxt[addr] = unused;
+
+    unused ++;
 }
 
 void erase(int addr){
