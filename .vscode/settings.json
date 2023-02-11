@@ -98,7 +98,7 @@
         "valarray": "cpp",
         "variant": "cpp",
         "vector": "cpp",
-        
+        "__bits": "cpp"
     },
     "code-runner.runInTerminal": true,
     "C_Cpp.errorSquiggles": "disabled"
