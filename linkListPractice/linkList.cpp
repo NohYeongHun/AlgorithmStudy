@@ -50,7 +50,6 @@ void insert_test(){
     traverse();
 }
 
-void erase
 
 int main(void){
     fill(pre, pre+MX, -1);
