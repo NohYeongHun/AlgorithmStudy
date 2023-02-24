@@ -9,6 +9,14 @@ int main(void){
     std::cin >> name;
     std::cout << "Hello, " << name << "; nice to meet you too!" << std::endl;
 
+    /*
+        출력 예상
+        What is your name?{name}
+        Hello, {name}
+        And What is yours?{name}
+        Hello, {name}; nice to meet you too
+    */
+
     return 0;
 
 }
