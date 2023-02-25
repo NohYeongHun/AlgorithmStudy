@@ -6,20 +6,22 @@ using namespace std;
 int main(){
     int a, b;
 
-    cout << "첫번째 사용자 : ";
+    cout << "첫번째 사용자 a : ";
     cin >> a;
 
-    cout << "두번째 사용자 : ";
+    cout << "두번째 사용자 b : ";
     cin >> b;
 
-    int ans;
+
     if (a > b) {
-        ans = a;
+        cout << " a > b";
+    } else if(a == b){
+        cout << " a == b ";
     } else{
-        ans = b;
+        cout << " a < b ";
     }
 
         
 
-    cout << "더 큰 수 : " <y< ans;
+    
 }

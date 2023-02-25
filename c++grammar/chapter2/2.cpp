@@ -15,14 +15,24 @@ int main()
     std::cout << "Please enter your first name: ";
     std::string name;
     std::cin >> name;
+    cout << "Please provide integer padY (vertical padding): ";
+    int inPadY;
+    cin >> inPadY;
+ 
+    // ask user to provide the horizontal padding
+    cout << "Please provide integer padX (horizontal padding): ";
+    int inPadX;
+    cin >> inPadX;
+
     const std::string greeting = "Hello, " + name + "!";
-    const int pad = 2;
-    const int rows = pad * 2 + 3;
-    const std::string::size_type cols = greeting.size() + pad * 2 + 3;
+    const int padX = inPadX;
+    const int padY = inPadY;
+    const int rows = (padY * 2) + 3;
+    
+
+    const std::string::size_type cols = greeting.size() + (padX * 2) + 2;
     std::cout << std::endl;
     int r = 0;
-
-    const std::string stars (cols, '*');
     
 
     for(int r = 0; r != rows; r++){
@@ -32,7 +42,7 @@ int main()
         while(c != cols){
             
             // 행과 열이 조건에 맞는 상황일 때.
-            if(r == pad + 2 && c == pad){
+            if((r == padY + 1) && (c == padX + 1)){
                 cout << greeting;
                 c += greeting.size();
             } else {

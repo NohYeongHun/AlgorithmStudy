@@ -17,13 +17,17 @@ int main()
     int pad;
     cout << "Please enter your pad: ";
     cin >> pad;
-    const int rows = pad * 2 + 3;
-    const std::string::size_type cols = greeting.size() + pad * 2 + 3;
+    // frame에 필요한 총 행 계산
+    const int rows = (pad * 2) + 3;
+    // 총 필요한 열의 크기
+    const std::string::size_type cols = greeting.size() + pad * 2 + 2;
     std::cout << std::endl;
-    int r = 0;
-
-    const std::string stars (cols, '*');
     
+    // greeting의 왼쪽 오른쪽 패딩 값.
+    const string padStringLeftRight(pad, ' ');
+
+    // greeting의 위 아래 위치한 패딩 값
+    const string padStringTopBottom((cols - 2), ' ');    
 
     for(int r = 0; r != rows; r++){
 
@@ -33,17 +37,30 @@ int main()
         while(c != cols){
             
             // 행과 열이 조건에 맞는 상황일 때.
-            if(r == pad + 2 && c == pad){
+            if(r == pad + 1 && c == pad + 1){
                 line += greeting;
                 c += greeting.size();
             } else {
 
                 if (r == 0 || r == rows - 1 || c == 0 || c == cols - 1){
                     line += '*';
+                    ++c;
                 } else {
-                    line += ' ';
+                    if (r == pad + 1)
+                    {
+                        // greeting의 padding
+                        line += padStringLeftRight;
+                        c += padStringLeftRight.size();
+                    }
+
+                    else{
+                        
+                        // greeting의 위 아래 padding
+                        line += padStringTopBottom;
+                        c += padStringTopBottom.size();
+                    }
                 }
-                ++c;
+        
             }
         }
         cout << line <<"\n";

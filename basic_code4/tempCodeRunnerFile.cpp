@@ -1,2 +1,2 @@
 copy(answer, answer + ap,
-            std::ostream_iterator<string>(std::cout, "\n"));
+        ostream_iterator<string>(cout, "\n"));
