@@ -1,8 +1,6 @@
-#include<string>
 #include<iostream>
 #include<algorithm>
 
-using std::string;
 using std::cout;
 using std::copy;
 
@@ -30,13 +28,15 @@ int main(){
     delete p;
     cout << "delete after p val= " << *p << '\n';
 
-    string s("Hello");
-    const char* sp = duplicate_chars(s.c_str());
+    const char* sp = duplicate_chars("Hello");
+    cout << "*sp = " << *sp << '\n';
+
+    // 포인터를 직접 출력시 C스타일 문자열로 처리되어 배열의 문자가 가리키는 첫 번째 문자부터 인쇄됨.
+    // 문자열의 끝인 null문자 ('\0') 가 나타날때 까지 sp. 따라서 출력 sp = "Hello"기 표시
     cout << "sp = " << sp << '\n';
     delete sp;
 
     cout << "delete after sp = " << *sp << '\n';
-
     
 
 }
