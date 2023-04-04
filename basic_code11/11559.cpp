@@ -3,124 +3,90 @@
 
 using namespace std;
 
-char board[12][6];
-int dx[4] = {1, -1, 0, 0};
-int dy[4] = {0, 0, 1, -1};
-int ans = 0;
+
+bool isPuyo;
+bool vis[12][6];
+string board[12];
+int dx[4] = {1, 0, -1, 0};
+int dy[4] = {0, 1, 0, -1};
+int ans;
+
+
+void resetVis(){
+    for (int i = 0; i < 12; ++i)
+        for (int j = 0; j < 6; ++j)
+            vis[i][j] = false;
+}
+
+void game(int x, int y){
+    bool doErase = false;
+
+    vis[x][y] = true;
+    char color = board[x][y];
+    queue<pair<int, int> > q;
+    vector<pair<int, int> > tmp;
+    q.push({x, y}); tmp.push_back({x, y});
+
+    while (!q.empty()) {
+        pair<int, int> cur = q.front(); q.pop();
+        for (int i = 0; i < 4; ++i)
+        {
+            int nx = cur.first + dx[i];
+            int ny = cur.second + dy[i];
+            if (nx < 0 || nx >= 12 || ny < 0 || ny >= 6) continue;
+            if (vis[nx][ny] || board[nx][ny] == '.' || board[nx][ny] != color) continue; 
+            vis[nx][ny] = true;
+            q.push({nx, ny}); tmp.push_back({nx, ny});
+        }
+    }
+
+    if (tmp.size() >= 4)
+    {
+        isPuyo = true;
+        for(auto cur : tmp)
+            board[cur.first][cur.second] = '.';    
+    }
+}
 
 int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0);
-    int visited[12][6];
+    for (int i = 0; i < 12; ++i)
+        cin >> board[i];
 
-    bool isEnd = false;
-    for (int i = 0; i < 12; i++)
-        for (int j = 0; j < 6; j++)
-            cin >> board[i][j];
-
-    while (true)
-    {
-        char color;
-        bool isDeleted = false;
-
-        for (int i = 0; i < 12; i++)
-        {
-            for (int j = 0; j < 6; j++)
-            {
-                color = board[i][j];
-                if (color == '.')
-                    continue;
-
-                int visited[12][6];
-                queue<pair<int, int> > q;
-                queue<pair<int, int> > deleted;
-                q.push({i, j});
-                deleted.push({i, j});
-                visited[i][j] = 1;
-                int cnt = 1;
-                int r; int c;
-                while (!q.empty())
-                {
-                    tie(r, c) = q.front();
-                    q.pop();
-
-                    for (int dir = 0; dir < 4; dir++)
-                    {
-                        int dr = r + dx[dir];
-                        int dc = c + dy[dir];
-
-                        if (dr < 0 || dr >= 12 || dc < 0 || dc >= 6)
-                            continue;
-                        if (visited[dr][dc] == 1)
-                            continue;
-                        if (board[dr][dc] == color)
-                        {
-                            visited[dr][dc] = 1;
-                            q.push({dr, dc});
-                            deleted.push({dr, dc});
-                            cnt++;
-                        }
-                    }
-                }
-
-                if (cnt >= 4)
-                {
-                    isDeleted = true;
-                    // 삭제
-                    while (!deleted.empty())
-                    {
-                        int r; int c;
-                        tie(r, c) = deleted.front();
-                        board[r][c] = '.'; 
-                        deleted.pop();
-                    }
-
-                    // 아래로 떨어짐.
-                    char cur;
-                    for (int i = 10; i >= 0; i--)
-                    {
-                        for (int j = 0; j < 6; j++)
-                        {
-                            cur = board[i][j];
-                            if (cur == '.')
-                                continue;
-
-                            int r; int c; int er; int ec;
-                            r = i;
-                            c = j;
-                            er = r + 1;
-                            ec = c;
-                            
-                            // 떨어질 수 있는 바닥인 동안.
-                            while (er < 12 && board[er][c] == '.')
-                            {
-                                er++;
-                            }
-                            if (er == 12) er--;
-                            // 삭제 후 이동
-                            board[r][c] = '.';
-                            board[er][ec] = cur;
-                        }
-                    }
+    do{
+        isPuyo = false; // 뿌요가 터졌는지 여부
+        for(int i = 0; i < 6; ++i){
+            // 필드의 빈 칸을 모두 뿌요 위로 올림
+            for(int j = 10; j >= 0; --j){
+                int tmp = j;
+                // 빈 칸일 경우 위치 변경
+                while(tmp < 11 && board[tmp+1][i] =='.'){
+                    swap(board[tmp][i], board[tmp+1][i]);
+                    ++tmp;
                 }
             }
         }
-
-        if (isDeleted == false)
+    
+    // 2-1. 게임을 시작한다. => board 순회
+    for (int i = 0; i < 12; ++i)
+    {
+        for (int j = 0; j < 6; ++j)
         {
-            cout << ans;
-            return 0;
+            if (!vis[i][j] && board[i][j] != '.')
+            {
+                game(i, j);
+            }
         }
-        else
-        {
-            ans++;
-        }
-        
-        
-
-        
     }
-    
-    
+
+    if (isPuyo)
+    {
+        ++ans;
+    }
+    resetVis();
+    } while(isPuyo);
+
+    cout << ans;
 }
