@@ -8,20 +8,9 @@ int board[10][10];
 int temp[10][10];
 vector<pair<int, int> > cctv;
 int ans = 1e9;
-bool visited[10];
 
 int dx[] = {1, 0, -1, 0};
 int dy[] = {0, 1, 0, -1};
-
-int dirs[5][2] = {{0, 0}, {0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-int cameras[6][4][4] = {
-    {{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}},
-    {{1, 0, 0, 0}, {2, 0, 0, 0}, {3, 0, 0, 0}, {4, 0, 0, 0}},
-    {{1, 2, 0, 0}, {3, 4, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}},
-    {{1, 3, 0, 0}, {1, 4, 0, 0}, {2, 3, 0, 0}, {2, 4, 0, 0}},
-    {{1, 2, 3, 0}, {1, 2, 4, 0}, {1, 3, 4, 0}, {2, 3, 4, 0}},
-    {{1, 2, 3, 4}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}
-};
 
 bool out_line(int x, int y)
 {
@@ -58,7 +47,6 @@ int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0);
-    fill(visited, visited + 10, false);
 
     // 세로, 가로
     cin >> N >> M;
@@ -67,11 +55,11 @@ int main()
     {
         for (int j = 0; j < M; j++)
         {
-            int temp;
-            cin >> temp;
-            board[i][j] = temp;
+            int tmp;
+            cin >> tmp;
+            board[i][j] = tmp;
 
-            if (temp == 0 || temp == 6) continue;
+            if (tmp == 0 || tmp == 6) continue;
             // r, c, cctv 종류
             cctv.push_back({i, j});
         }
@@ -89,6 +77,7 @@ int main()
         for(int i = 0; i < N; i++)
             for(int j = 0; j < M; j++)
                 temp[i][j] = board[i][j];
+        // 빈 보드에서 경우의 수를 끝까지 적용
         int val = tmp;
         for (int i = 0; i < cctv.size(); i++) {
             int dir = val % 4;
