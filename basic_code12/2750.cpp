@@ -18,7 +18,7 @@ void quick_sort(int left, int right)
     int L = left;
     int R = right;
     
-    do{
+    while(L <= R){
 
         while(arr[L] < pivot) {
             L++;
@@ -33,7 +33,7 @@ void quick_sort(int left, int right)
             L++;
             R--;
         }
-    }while(L <= R);
+    }
 
     if (left < R)
         quick_sort(left, R);
